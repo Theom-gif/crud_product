@@ -5,39 +5,61 @@
     <title>Create Product</title>
 </head>
 <body>
-    <h1>Create Product</h1>
-    <a href="{{ route('products.index') }}">Back</a>
+    <style>
+        body { font-family: Arial, Helvetica, sans-serif; background: #f5f7fa; padding: 20px; }
+        .form-card { max-width: 700px; margin: 28px auto; background: #fff; padding: 20px 24px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .form-card h1 { margin: 0 0 8px; font-size: 1.4rem; }
+        .form-row { margin-bottom: 12px; }
+        label { display: block; font-weight: 600; margin-bottom: 6px; }
+        input[type="text"], input[type="number"], select, textarea { width: 100%; padding: 8px 10px; border: 1px solid #e2e8f0; border-radius: 6px; box-sizing: border-box; }
+        button { background: #2563eb; color: #fff; padding: 8px 14px; border-radius: 6px; border: none; cursor: pointer; }
+        a.button-link { color: #2563eb; text-decoration: none; margin-bottom: 12px; display: inline-block; }
+        .error { color: #b91c1c; background: #fff1f2; padding: 8px; border-radius: 4px; margin-bottom: 12px; }
+    </style>
 
-    @if($errors->any())
-        <div style="color:red">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    <div class="form-card">
+        <h1>Create Product</h1>
+        <a class="button-link" href="{{ route('products.index') }}">← Back</a>
 
-    <form action="{{ route('products.store') }}" method="POST">
-        @csrf
-        <label>Name</label>
-        <input type="text" name="name" value="{{ old('name') }}">
-        <br>
-        <label>Price</label>
-        <input type="text" name="price" value="{{ old('price') }}">
-        <br>
-        <label>Qty</label>
-        <input type="number" name="qty" value="{{ old('qty') }}">
-        <br>
-        <label>Category</label>
-        <select name="category_id">
-            <option value="">-- Select --</option>
-            @foreach($categories as $cat)
-                <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
-            @endforeach
-        </select>
-        <br>
-        <button type="submit">Save</button>
-    </form>
+        @if($errors->any())
+            <div class="error">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form action="{{ route('products.store') }}" method="POST">
+            @csrf
+            <div class="form-row">
+                <label>Name</label>
+                <input type="text" name="name" value="{{ old('name') }}">
+            </div>
+
+            <div class="form-row">
+                <label>Price</label>
+                <input type="text" name="price" value="{{ old('price') }}">
+            </div>
+
+            <div class="form-row">
+                <label>Qty</label>
+                <input type="number" name="qty" value="{{ old('qty') }}">
+            </div>
+
+            <div class="form-row">
+                <label>Category</label>
+                <select name="category_id">
+                    <option value="">-- Select --</option>
+                    @foreach($categories as $cat)
+                        <option value="{{ $cat->id }}" {{ old('category_id') == $cat->id ? 'selected' : '' }}>{{ $cat->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <button type="submit">Save</button>
+        </form>
+    </div>
 </body>
 </html>
